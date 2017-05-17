@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour {
 
 	private float xmin;
 	private float xmax;
-	private float ymin;
-	private float ymax;
+	//private float ymin;
+	//private float ymax;
 
 	void Start () {
 		//Camera Distance
@@ -21,10 +21,10 @@ public class PlayerController : MonoBehaviour {
 		xmin = leftmost.x + padding;
 		xmax = rightmost.x - padding;
 		//Binding y movement to camera
-		Vector3 topmost = Camera.main.ViewportToWorldPoint (new Vector3 (0f,0f,distance));
-		Vector3 bottommost = Camera.main.ViewportToWorldPoint (new Vector3 (0f,1f,distance));
-		ymin = topmost.y + padding;
-		ymax = bottommost.y - padding;
+		//Vector3 topmost = Camera.main.ViewportToWorldPoint (new Vector3 (0f,0f,distance));
+		//Vector3 bottommost = Camera.main.ViewportToWorldPoint (new Vector3 (0f,1f,distance));
+		//ymin = topmost.y + padding;
+		//ymax = bottommost.y - padding;
 	}
 	
 	// Update is called once per frame
@@ -35,16 +35,16 @@ public class PlayerController : MonoBehaviour {
 		} else if (Input.GetKey (KeyCode.RightArrow)) {
 			//transform.position += new Vector3(moveSpeed * Time.deltaTime,0f,0f);
 			transform.position += Vector3.right * moveSpeed * Time.deltaTime;
-		} else if (Input.GetKey (KeyCode.DownArrow)) {
-			transform.position += Vector3.down * moveSpeed * Time.deltaTime;
-		} else if (Input.GetKey (KeyCode.UpArrow)) {
-			transform.position += Vector3.up * moveSpeed * Time.deltaTime;
-		}
+		} //else if (Input.GetKey (KeyCode.DownArrow)) {
+		//	transform.position += Vector3.down * moveSpeed * Time.deltaTime;
+		//} else if (Input.GetKey (KeyCode.UpArrow)) {
+		//	transform.position += Vector3.up * moveSpeed * Time.deltaTime;
+		//}
 	
 		//restrict player to gamespace
 		float newX = Mathf.Clamp (transform.position.x, xmin, xmax);
-		float newY = Mathf.Clamp (transform.position.y, ymin, ymax);
-		transform.position = new Vector3 (newX, newY, transform.position.z);
+		//float newY = Mathf.Clamp (transform.position.y, ymin, ymax);
+		transform.position = new Vector3 (newX, transform.position.y, transform.position.z);
 	}
 
 }

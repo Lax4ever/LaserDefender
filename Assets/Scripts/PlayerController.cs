@@ -5,6 +5,9 @@ public class PlayerController : MonoBehaviour {
 
 	public float moveSpeed = 15f;
 	public float padding= 0.5f;
+	public GameObject laser;
+	public float projectileSpeed;
+	public float firingRate;
 
 	private float xmin;
 	private float xmax;
@@ -26,6 +29,11 @@ public class PlayerController : MonoBehaviour {
 		//ymin = topmost.y + padding;
 		//ymax = bottommost.y - padding;
 	}
+
+	void Fire() {
+		GameObject laserShot = Instantiate (laser, transform.position, Quaternion.identity) as GameObject;
+		laserShot.rigidbody2D.velocity = new Vector2(0f, projectileSpeed);
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -45,6 +53,15 @@ public class PlayerController : MonoBehaviour {
 		float newX = Mathf.Clamp (transform.position.x, xmin, xmax);
 		//float newY = Mathf.Clamp (transform.position.y, ymin, ymax);
 		transform.position = new Vector3 (newX, transform.position.y, transform.position.z);
+
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			InvokeRepeating("Fire", 0.1f, firingRate);
+		}
+
+		if (Input.GetKeyUp (KeyCode.Space)) {
+			CancelInvoke ("Fire");
+		}
 	}
+
 
 }

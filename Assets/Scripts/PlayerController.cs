@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject laser;
 	public float projectileSpeed;
 	public float firingRate;
+	public float health = 300;
 
 	private float xmin;
 	private float xmax;
@@ -31,10 +32,23 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Fire() {
-		GameObject laserShot = Instantiate (laser, transform.position, Quaternion.identity) as GameObject;
+		Vector3 firePosition = transform.position + new Vector3 (0, 1f, 0);
+		GameObject laserShot = Instantiate (laser, firePosition, Quaternion.identity) as GameObject;
 		laserShot.rigidbody2D.velocity = new Vector2(0f, projectileSpeed);
 	}
-	
+
+	void OnTriggerEnter2D (Collider2D col) {
+		Debug.Log ("Player Hit by Missile");
+		Projectile missile = col.gameObject.GetComponent<Projectile>();
+		if (missile) {
+			health -= missile.GetDamage ();
+			missile.Hit ();
+			if (health <= 0) {
+			Destroy (gameObject);
+			}
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKey (KeyCode.LeftArrow)) {

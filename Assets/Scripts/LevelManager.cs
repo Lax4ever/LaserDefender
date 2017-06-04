@@ -4,10 +4,14 @@ using System.Collections;
 public class LevelManager : MonoBehaviour {
 
 	public void LoadLevel (string name) {
-		Debug.Log("Level load requested for: " + name);
 		Application.LoadLevel (name);
 	}
-
+	public void PlayerDestroyed () {
+		LoadLoseLevel ();
+	}
+		public void PlayerWin () {
+		LoadWinLevel ();
+	}
 	public void QuitRequest () {
 		Debug.Log ("Quit Game");
 		Application.Quit ();
@@ -15,9 +19,12 @@ public class LevelManager : MonoBehaviour {
 	public void LoadNextLevel () {
 		Application.LoadLevel (Application.loadedLevel + 1);
 	}
-	public void BrickDestroyed () {
-		    LoadNextLevel();
-		}
+	void LoadLoseLevel () {
+		Application.LoadLevel ("Lose");
+	}
 
+	void LoadWinLevel () {
+		Application.LoadLevel ("Win");
+	}
 }
 

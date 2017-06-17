@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ScoreKeeper : MonoBehaviour {
 
-	public int score = 0;
+	public static int score = 0;
 
 	private Text myText;
 	private LevelManager levelManager;
@@ -13,6 +13,7 @@ public class ScoreKeeper : MonoBehaviour {
 		levelManager = GameObject.FindObjectOfType<LevelManager> ();
 		myText = GetComponent<Text> ();
 		Reset ();
+		myText.text = "Score: " + score.ToString ();
 	}
 
 	public void Score(int points){
@@ -20,14 +21,12 @@ public class ScoreKeeper : MonoBehaviour {
 		myText.text = "Score: " + score.ToString ();
 	}
 
-	public void Reset (){
+	public static void Reset (){
 		score = 0;
-		myText.text = "Score: " + score.ToString ();
 	}
 
 	void Update () {
 		if (score >= 5000) {
-			Debug.Log ("Win");
 			levelManager.PlayerWin();
 		}
 	}
